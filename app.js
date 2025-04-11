@@ -7,23 +7,27 @@ function sortear() {
     let quantidade = parseInt(document.getElementById('quantidade').value);
     let de = parseInt(document.getElementById('de').value);
     let ate = parseInt(document.getElementById('ate').value);
-    let possiblidades = ate-de+1
-    if (quantidade > possiblidades || quantidade <= 0) {
-        alert ("Preenchimento inválido");
+    let possibilidades = ate-de+1
+    if (de >= ate) {
+        alert ("Campo 'do número' deve ser menor que campo 'até o número'");
+    } else if (quantidade <= 0) {
+        alert ("Quantidade de números deve ser maior que 0")
+    } else if (quantidade > possibilidades) {
+        alert ("Quantidade de números maior que o intervalo")
     } else {
-    let numeros = [];
-    let numero;
-    for (let i = 0; i < quantidade; i++) {
-        numero = gerarNumeros(de, ate);
-        while (numeros.includes(numero)) {
+        let numeros = [];
+        let numero;
+        for (let i = 0; i < quantidade; i++) {
             numero = gerarNumeros(de, ate);
+            while (numeros.includes(numero)) {
+                numero = gerarNumeros(de, ate);
+            }
+            numeros.push(numero);   
         }
-        numeros.push(numero);   
-    }
-    let resultado = document.getElementById('resultado');
-    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados: ${numeros}</label>`;
-    alterarStatusBotao();
-    }
+        let resultado = document.getElementById('resultado');
+        resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados: ${numeros}</label>`;
+        alterarStatusBotao();
+        }
 }
 
 function gerarNumeros(min, max) {
